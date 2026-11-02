@@ -1,3 +1,4 @@
+using System.IO;
 namespace AcquisitionExport.Core;
 
 /// <summary>Finds a target's light frames under a folder by reading each FITS header.</summary>

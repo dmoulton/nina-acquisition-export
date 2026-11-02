@@ -1,3 +1,4 @@
+using System.IO;
 using AcquisitionExport.Core;
 
 namespace NinaAcquisitionExport;

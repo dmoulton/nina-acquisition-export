@@ -1,3 +1,4 @@
+using System.IO;
 using System.Text.Json;
 using AcquisitionExport.Core;
 using NINA.Profile;
