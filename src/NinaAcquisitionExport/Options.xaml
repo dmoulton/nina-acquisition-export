@@ -1,0 +1,71 @@
+<ResourceDictionary
+    x:Class="NinaAcquisitionExport.Options"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  NINA finds this page by the key: the plugin's AssemblyTitle followed by _Options.  -->
+    <DataTemplate x:Key="Acquisition Export_Options">
+        <StackPanel Orientation="Vertical">
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="400" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Margin="0,3,10,3" VerticalAlignment="Center" Text="Image folder" />
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="0,3" ToolTip="Searched for light frames, including subfolders. Blank uses NINA's image file path." Text="{Binding ImageFolder, UpdateSourceTrigger=LostFocus}" />
+                <TextBlock Grid.Row="1" Margin="0,3,10,3" VerticalAlignment="Center" Text="Export folder" />
+                <TextBox Grid.Row="1" Grid.Column="1" Margin="0,3" ToolTip="Blank uses an Acquisition Exports folder inside the image folder." Text="{Binding ExportFolder, UpdateSourceTrigger=LostFocus}" />
+                <TextBlock Grid.Row="2" Margin="0,3,10,3" VerticalAlignment="Center" Text="Bortle" />
+                <TextBox Grid.Row="2" Grid.Column="1" Width="50" Margin="0,3" HorizontalAlignment="Left" Text="{Binding Bortle, UpdateSourceTrigger=LostFocus}" />
+                <TextBlock Grid.Row="3" Margin="0,3,10,3" VerticalAlignment="Center" Text="Gallery location" />
+                <TextBox Grid.Row="3" Grid.Column="1" Margin="0,3" Text="{Binding Location, UpdateSourceTrigger=LostFocus}" />
+                <TextBlock Grid.Row="4" Margin="0,3,10,3" VerticalAlignment="Center" Text="Gallery equipment" />
+                <TextBox Grid.Row="4" Grid.Column="1" Margin="0,3" Text="{Binding Equipment, UpdateSourceTrigger=LostFocus}" />
+            </Grid>
+
+            <TextBlock Margin="0,0,0,4" Text="Filters" FontWeight="Bold" />
+            <DataGrid
+                MaxWidth="620"
+                Margin="0,0,0,6"
+                HorizontalAlignment="Left"
+                AutoGenerateColumns="False"
+                CanUserAddRows="True"
+                CanUserDeleteRows="True"
+                ItemsSource="{Binding FilterRows}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="180" Binding="{Binding NinaFilter, UpdateSourceTrigger=PropertyChanged}" Header="NINA filter name" />
+                    <DataGridTextColumn Width="180" Binding="{Binding AstroBinId, UpdateSourceTrigger=PropertyChanged}" Header="AstroBin filter ID" />
+                    <DataGridTextColumn Width="180" Binding="{Binding GalleryLabel, UpdateSourceTrigger=PropertyChanged}" Header="Gallery label" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button
+                Width="220"
+                Height="28"
+                Margin="0,0,0,14"
+                HorizontalAlignment="Left"
+                Command="{Binding LoadProfileFiltersCommand}">
+                <TextBlock Text="Add filters from this profile" />
+            </Button>
+
+            <TextBlock Margin="0,0,0,4" Text="Export a target" FontWeight="Bold" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox
+                    Width="300"
+                    Margin="0,0,8,0"
+                    VerticalContentAlignment="Center"
+                    ToolTip="The target name in your FITS files. Separate alternate names with commas, for example: M20, Trifid"
+                    Text="{Binding ExportTargetNames, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Width="110" Height="28" Command="{Binding ExportCommand}">
+                    <TextBlock Text="Export now" />
+                </Button>
+            </StackPanel>
+            <TextBlock Margin="0,6,0,0" MaxWidth="620" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ExportStatus}" />
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

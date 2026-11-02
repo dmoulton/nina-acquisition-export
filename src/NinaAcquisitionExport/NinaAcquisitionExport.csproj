@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>NinaAcquisitionExport</RootNamespace>
+    <AssemblyName>NinaAcquisitionExport</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NINA.Plugin" Version="3.2.0.9001" />
+  </ItemGroup>
+  <!-- The export logic compiles into this one DLL, so installing means copying a single file. -->
+  <ItemGroup>
+    <Compile Include="..\AcquisitionExport.Core\**\*.cs" Exclude="..\AcquisitionExport.Core\bin\**;..\AcquisitionExport.Core\obj\**" LinkBase="Core" />
+  </ItemGroup>
+</Project>
