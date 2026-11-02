@@ -11,11 +11,11 @@ using NINA.Sequencer.SequenceItem;
 namespace NinaAcquisitionExport;
 
 /// <summary>
-/// A sequence instruction that exports the surrounding target's files. A failed export
+/// A sequence instruction that exports the surrounding target's CSV. A failed export
 /// only warns, because paperwork shouldn't stop a night's sequence from finishing.
 /// </summary>
 [ExportMetadata("Name", "Export Acquisition Data")]
-[ExportMetadata("Description", "Writes an AstroBin CSV and gallery YAML from this target's light frames across all nights.")]
+[ExportMetadata("Description", "Writes an AstroBin CSV from this target's light frames across all nights.")]
 [ExportMetadata("Icon", "SaveSVG")]
 [ExportMetadata("Category", "Acquisition Export")]
 [Export(typeof(ISequenceItem))]

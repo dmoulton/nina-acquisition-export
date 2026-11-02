@@ -14,8 +14,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Margin="0,3,10,3" VerticalAlignment="Center" Text="Image folder" />
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="0,3" ToolTip="Searched for light frames, including subfolders. Blank uses NINA's image file path." Text="{Binding ImageFolder, UpdateSourceTrigger=LostFocus}" />
@@ -23,15 +21,11 @@
                 <TextBox Grid.Row="1" Grid.Column="1" Margin="0,3" ToolTip="Blank uses an Acquisition Exports folder inside the image folder." Text="{Binding ExportFolder, UpdateSourceTrigger=LostFocus}" />
                 <TextBlock Grid.Row="2" Margin="0,3,10,3" VerticalAlignment="Center" Text="Bortle" />
                 <TextBox Grid.Row="2" Grid.Column="1" Width="50" Margin="0,3" HorizontalAlignment="Left" Text="{Binding Bortle, UpdateSourceTrigger=LostFocus}" />
-                <TextBlock Grid.Row="3" Margin="0,3,10,3" VerticalAlignment="Center" Text="Gallery location" />
-                <TextBox Grid.Row="3" Grid.Column="1" Margin="0,3" Text="{Binding Location, UpdateSourceTrigger=LostFocus}" />
-                <TextBlock Grid.Row="4" Margin="0,3,10,3" VerticalAlignment="Center" Text="Gallery equipment" />
-                <TextBox Grid.Row="4" Grid.Column="1" Margin="0,3" Text="{Binding Equipment, UpdateSourceTrigger=LostFocus}" />
             </Grid>
 
             <TextBlock Margin="0,0,0,4" Text="Filters" FontWeight="Bold" />
             <DataGrid
-                MaxWidth="620"
+                MaxWidth="400"
                 Margin="0,0,0,6"
                 HorizontalAlignment="Left"
                 AutoGenerateColumns="False"
@@ -41,7 +35,6 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="180" Binding="{Binding NinaFilter, UpdateSourceTrigger=PropertyChanged}" Header="NINA filter name" />
                     <DataGridTextColumn Width="180" Binding="{Binding AstroBinId, UpdateSourceTrigger=PropertyChanged}" Header="AstroBin filter ID" />
-                    <DataGridTextColumn Width="180" Binding="{Binding GalleryLabel, UpdateSourceTrigger=PropertyChanged}" Header="Gallery label" />
                 </DataGrid.Columns>
             </DataGrid>
             <Button

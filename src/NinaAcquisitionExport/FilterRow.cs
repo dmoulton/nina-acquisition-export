@@ -8,7 +8,6 @@ namespace NinaAcquisitionExport;
 public sealed class FilterRow : INotifyPropertyChanged {
     private string ninaFilter = string.Empty;
     private string astroBinId = string.Empty;
-    private string galleryLabel = string.Empty;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -22,21 +21,14 @@ public sealed class FilterRow : INotifyPropertyChanged {
         set => Set(ref astroBinId, value);
     }
 
-    public string GalleryLabel {
-        get => galleryLabel;
-        set => Set(ref galleryLabel, value);
-    }
-
     public FilterMapping ToMapping() => new() {
         NinaFilter = NinaFilter ?? string.Empty,
         AstroBinId = AstroBinId ?? string.Empty,
-        GalleryLabel = GalleryLabel ?? string.Empty,
     };
 
     public static FilterRow From(FilterMapping mapping) => new() {
         NinaFilter = mapping.NinaFilter,
         AstroBinId = mapping.AstroBinId,
-        GalleryLabel = mapping.GalleryLabel,
     };
 
     private void Set(ref string field, string value, [CallerMemberName] string? name = null) {

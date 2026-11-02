@@ -12,28 +12,20 @@ public sealed record Frame(
     public DateOnly Night => DateOnly.FromDateTime(LocalStart.AddHours(-12));
 }
 
-/// <summary>How one NINA filter name appears on AstroBin and in the gallery.</summary>
+/// <summary>The AstroBin filter ID for one NINA filter name.</summary>
 public sealed class FilterMapping {
     public string NinaFilter { get; set; } = "";
     public string AstroBinId { get; set; } = "";
-    public string GalleryLabel { get; set; } = "";
 }
 
 public sealed class ExportSettings {
     public string ImageFolder { get; set; } = "";
     public string ExportFolder { get; set; } = "";
     public int Bortle { get; set; } = 6;
-    public string Location { get; set; } = "";
-    public string Equipment { get; set; } = "";
     public List<FilterMapping> Filters { get; set; } = new();
 
     public FilterMapping? MappingFor(string filter) =>
         Filters.FirstOrDefault(f => string.Equals(f.NinaFilter.Trim(), filter.Trim(), StringComparison.OrdinalIgnoreCase));
-
-    public string GalleryLabelFor(string filter) {
-        var label = MappingFor(filter)?.GalleryLabel.Trim();
-        return string.IsNullOrEmpty(label) ? filter : label;
-    }
 
     /// <summary>Filters sort in settings order, then alphabetically if they aren't listed.</summary>
     public int SortIndexFor(string filter) {
@@ -52,7 +44,6 @@ public sealed class ScanResult {
 
 public sealed class ExportResult {
     public string? CsvPath { get; set; }
-    public string? GalleryPath { get; set; }
     public int FrameCount { get; set; }
     public int NightCount { get; set; }
     public List<string> Warnings { get; } = new();

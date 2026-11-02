@@ -35,16 +35,6 @@ public sealed class PluginSettings {
         set => accessor.SetValueInt32(nameof(Bortle), value);
     }
 
-    public string Location {
-        get => accessor.GetValueString(nameof(Location), string.Empty);
-        set => accessor.SetValueString(nameof(Location), value ?? string.Empty);
-    }
-
-    public string Equipment {
-        get => accessor.GetValueString(nameof(Equipment), string.Empty);
-        set => accessor.SetValueString(nameof(Equipment), value ?? string.Empty);
-    }
-
     public List<FilterMapping> Filters {
         get {
             var json = accessor.GetValueString(nameof(Filters), string.Empty);
@@ -75,8 +65,6 @@ public sealed class PluginSettings {
             ImageFolder = imageFolder ?? string.Empty,
             ExportFolder = exportFolder,
             Bortle = Bortle,
-            Location = Location,
-            Equipment = Equipment,
             Filters = Filters,
         };
     }

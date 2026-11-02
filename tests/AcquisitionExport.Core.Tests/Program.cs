@@ -51,14 +51,12 @@ static (string, string)[] Light(string target, string filter, double exposure, s
 
 var settings = new ExportSettings {
     Bortle = 6,
-    Location = "Heatheridge Observatory",
-    Equipment = "AT130EDT | QHYCCD miniCAM8M | RGBHO Filters",
     Filters = new() {
-        new() { NinaFilter = "R", AstroBinId = "32342", GalleryLabel = "R" },
-        new() { NinaFilter = "G", AstroBinId = "32343", GalleryLabel = "G" },
-        new() { NinaFilter = "B", AstroBinId = "32344", GalleryLabel = "B" },
-        new() { NinaFilter = "H", AstroBinId = "43627", GalleryLabel = "Ha" },
-        new() { NinaFilter = "O", AstroBinId = "43628", GalleryLabel = "O" },
+        new() { NinaFilter = "R", AstroBinId = "32342" },
+        new() { NinaFilter = "G", AstroBinId = "32343" },
+        new() { NinaFilter = "B", AstroBinId = "32344" },
+        new() { NinaFilter = "H", AstroBinId = "43627" },
+        new() { NinaFilter = "O", AstroBinId = "43628" },
     },
 };
 Frame F(string filter, double seconds, string local, int gain = 30, double temp = -10) =>
@@ -111,37 +109,6 @@ Test("keeps different gains on separate rows", () => {
     Equal(3, csv.Trim().Split('\n').Length);
 });
 
-Test("matches the gallery date format, using each night's first date", () => {
-    Equal("13 Jun 2026 (00:20 - 04:20) | 13 Jun 2026 (23:45 - 04:10)", AcquisitionWriters.DateLine(new[] {
-        F("H", 480, "2026-06-13T00:21:00"),
-        F("H", 480, "2026-06-13T04:19:00"),
-        F("H", 480, "2026-06-13T23:44:00"),
-        F("H", 480, "2026-06-14T04:11:00"),
-    }));
-});
-
-Test("rounds a time past midnight without changing format", () => {
-    Equal("1 Jan 2027 (00:00 - 00:00)", AcquisitionWriters.DateLine(new[] {
-        F("H", 60, "2027-01-01T23:58:00"),
-    }));
-});
-
-Test("matches the gallery image_info format in settings order", () => {
-    Equal("42x120\" R | 66x480\" Ha | 1x0.5\" Z", AcquisitionWriters.ImageInfoLine(
-        Enumerable.Repeat(F("H", 480, "2026-06-13T23:00:00"), 66)
-            .Concat(Enumerable.Repeat(F("R", 120, "2026-06-13T23:00:00"), 42))
-            .Append(F("Z", 0.5, "2026-06-13T23:00:00")), settings));
-});
-
-Test("writes gallery YAML the site can parse", () => {
-    var yaml = AcquisitionWriters.GalleryYaml("M20", new[] { F("R", 120, "2026-06-13T23:00:00") }, settings);
-    Equal(true, yaml.Contains("  - title: M20\n"));
-    Equal(true, yaml.Contains("    date: 13 Jun 2026 (23:00 - 23:00)\n"));
-    Equal(true, yaml.Contains("    location: Heatheridge Observatory\n"));
-    Equal(true, yaml.Contains("    equipment: AT130EDT | QHYCCD miniCAM8M | RGBHO Filters\n"));
-    Equal(true, yaml.Contains("    image_info: 1x120\" R\n"));
-});
-
 Test("exports only matching light frames across night folders", () => {
     var root = Path.Combine(Path.GetTempPath(), "acqexp-" + Guid.NewGuid());
     try {
@@ -175,8 +142,8 @@ Test("exports only matching light frames across night folders", () => {
         Equal(true, result.Warnings.Any(w => w.Contains("No AstroBin ID for S")));
         Equal(true, result.Warnings.Any(w => w.Contains("1 FITS files couldn't be read")));
         Equal(true, result.Warnings.Any(w => w.Contains("1 XISF")));
-        Equal(true, File.Exists(result.GalleryPath!));
         Equal(false, File.Exists(result.CsvPath + ".tmp"));
+        Equal(new[] { "M20_astrobin.csv" }.Single(), Directory.GetFiles(settings.ExportFolder).Select(Path.GetFileName).Single());
 
         // Culling a sub lowers the totals on the next export.
         File.Delete(Path.Combine(root, "2026-06-13/M20/LIGHT/b.fits"));

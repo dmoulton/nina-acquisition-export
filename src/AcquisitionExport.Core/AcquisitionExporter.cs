@@ -5,7 +5,7 @@ namespace AcquisitionExport.Core;
 
 public static class AcquisitionExporter {
     /// <summary>
-    /// Rebuilds a target's files from every matching frame on disk. Existing files are
+    /// Rebuilds a target's CSV from every matching frame on disk. An existing file is
     /// left alone if no frames are found.
     /// </summary>
     public static ExportResult Export(
@@ -47,14 +47,10 @@ public static class AcquisitionExporter {
         }
 
         Directory.CreateDirectory(settings.ExportFolder);
-        var fileStem = SafeFileName(names[0]);
-        var csvPath = Path.Combine(settings.ExportFolder, $"{fileStem}_astrobin.csv");
-        var galleryPath = Path.Combine(settings.ExportFolder, $"{fileStem}_gallery.yml");
+        var csvPath = Path.Combine(settings.ExportFolder, $"{SafeFileName(names[0])}_astrobin.csv");
         WriteFile(csvPath, AcquisitionWriters.AstroBinCsv(scan.Frames, settings));
-        WriteFile(galleryPath, AcquisitionWriters.GalleryYaml(names[0], scan.Frames, settings));
 
         result.CsvPath = csvPath;
-        result.GalleryPath = galleryPath;
         result.FrameCount = scan.Frames.Count;
         result.NightCount = scan.Frames.Select(f => f.Night).Distinct().Count();
         return result;

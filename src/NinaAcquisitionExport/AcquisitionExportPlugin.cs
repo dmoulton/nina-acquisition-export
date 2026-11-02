@@ -57,16 +57,6 @@ public class AcquisitionExportPlugin : PluginBase, INotifyPropertyChanged {
         set { settings.Bortle = Math.Clamp(value, 1, 9); Raise(); }
     }
 
-    public string Location {
-        get => settings.Location;
-        set { settings.Location = value; Raise(); }
-    }
-
-    public string Equipment {
-        get => settings.Equipment;
-        set { settings.Equipment = value; Raise(); }
-    }
-
     public string ExportTargetNames {
         get => exportTargetNames;
         set { exportTargetNames = value; Raise(); }
@@ -104,7 +94,7 @@ public class AcquisitionExportPlugin : PluginBase, INotifyPropertyChanged {
     private void LoadProfileFilters() {
         foreach (var name in settings.ProfileFilterNames) {
             if (!FilterRows.Any(r => string.Equals(r.NinaFilter, name, StringComparison.OrdinalIgnoreCase))) {
-                FilterRows.Add(new FilterRow { NinaFilter = name, GalleryLabel = name });
+                FilterRows.Add(new FilterRow { NinaFilter = name });
             }
         }
     }
@@ -141,7 +131,7 @@ public class AcquisitionExportPlugin : PluginBase, INotifyPropertyChanged {
 
     private void ProfileService_ProfileChanged(object? sender, EventArgs e) {
         LoadFilterRows();
-        foreach (var name in new[] { nameof(ImageFolder), nameof(ExportFolder), nameof(Bortle), nameof(Location), nameof(Equipment) }) {
+        foreach (var name in new[] { nameof(ImageFolder), nameof(ExportFolder), nameof(Bortle) }) {
             Raise(name);
         }
     }

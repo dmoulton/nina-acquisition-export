@@ -1,11 +1,8 @@
 # Acquisition Export for N.I.N.A.
 
-A [N.I.N.A.](https://nighttime-imaging.eu/) 3.2 plugin that turns a target's saved light frames into two files:
+A [N.I.N.A.](https://nighttime-imaging.eu/) 3.2 plugin that turns a target's saved light frames into a CSV for AstroBin's acquisition import, such as `M20_astrobin.csv`, with one row per night, filter, exposure, gain, and binning.
 
-- `M20_astrobin.csv`: one row per night, filter, exposure, gain, and binning, ready for AstroBin's acquisition import
-- `M20_gallery.yml`: the date, location, equipment, and sub counts for a site gallery entry
-
-It reads the FITS headers of every matching frame, so the files always cover all nights. Delete a bad sub and the next export drops it. Nothing is uploaded anywhere.
+It reads the FITS headers of every matching frame, so the file always covers all nights. Delete a bad sub and the next export drops it. Nothing is uploaded anywhere.
 
 ## Install
 
@@ -18,9 +15,9 @@ It reads the FITS headers of every matching frame, so the files always cover all
 In **Options > Plugins > Acquisition Export**:
 
 - **Image folder:** where to look for light frames, including subfolders. Blank uses NINA's image file path.
-- **Export folder:** where the files go. Blank uses `Acquisition Exports` inside the image folder.
-- **Bortle, gallery location, gallery equipment:** written as entered.
-- **Filters:** your AstroBin filter ID and gallery label for each NINA filter name. A filter with no ID gets a blank in the CSV and a warning.
+- **Export folder:** where the CSV goes. Blank uses `Acquisition Exports` inside the image folder.
+- **Bortle:** written on every row.
+- **Filters:** your AstroBin filter ID for each NINA filter name. A filter with no ID gets a blank in the CSV and a warning.
 
 Settings are saved per NINA profile.
 
@@ -31,7 +28,7 @@ Settings are saved per NINA profile.
 
 A frame counts if its `OBJECT` matches a target name and its `IMAGETYP` is `LIGHT`. Files in a folder named `SNAPSHOT` are skipped, because NINA also marks snapshots as `LIGHT`. XISF files are skipped with a warning.
 
-Nights run noon to noon. The CSV uses the date the night began, and the gallery line uses the date of the night's first frame.
+Nights run noon to noon, and the CSV uses the date the night began.
 
 ## Develop
 
