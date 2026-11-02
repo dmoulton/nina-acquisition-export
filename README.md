@@ -4,11 +4,15 @@ A [N.I.N.A.](https://nighttime-imaging.eu/) 3.2 plugin that turns a target's sav
 
 It reads the FITS headers of every matching frame, so the file always covers all nights. Delete a bad sub and the next export drops it. Nothing is uploaded anywhere.
 
+> **Still in testing.** This plugin isn't in NINA's plugin directory yet, so it won't appear in NINA's plugin manager. Check your first few CSVs before importing them, and please report problems in [GitHub Issues](https://github.com/dmoulton/nina-acquisition-export/issues).
+
 ## Install
 
-1. Open the latest successful run on the repo's **Actions** tab and download the `NinaAcquisitionExport` artifact.
+1. Download the zip from the newest version on the [Releases page](https://github.com/dmoulton/nina-acquisition-export/releases).
 2. Unzip it and put `NinaAcquisitionExport.dll` in `%LOCALAPPDATA%\NINA\Plugins\3.0.0\AcquisitionExport\`, creating that folder if needed. If the `Plugins` folder has a different version folder, use that one.
 3. Restart NINA.
+
+To update, close NINA, replace the DLL with the one from a newer release, and start NINA again. The plugin doesn't update itself.
 
 ## Set up
 

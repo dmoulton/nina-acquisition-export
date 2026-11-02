@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -27,3 +29,12 @@ jobs:
           name: NinaAcquisitionExport
           path: src/NinaAcquisitionExport/bin/Release/net8.0-windows/NinaAcquisitionExport.dll
           if-no-files-found: error
+      - name: Publish pre-release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $zip = "NinaAcquisitionExport-${{ github.ref_name }}.zip"
+          Compress-Archive -Path src/NinaAcquisitionExport/bin/Release/net8.0-windows/NinaAcquisitionExport.dll -DestinationPath $zip
+          gh release create "${{ github.ref_name }}" $zip --prerelease --generate-notes
